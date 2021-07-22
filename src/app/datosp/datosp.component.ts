@@ -4,6 +4,8 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -12,17 +14,32 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./datosp.component.css']
 })
 export class DatospComponent implements OnInit {
-
+  public   contactForm: FormGroup
   articulos:any;
+
+  createForm(){
+    return new FormGroup({
+      entradita: new FormControl('',(Validators.required)),
+      tipop: new FormControl('',(Validators.required)),
+      salidae: new FormControl('',(Validators.required)),
+      descripcion: new FormControl('',(Validators.required)),
+      herramientas: new FormControl('',(Validators.required))
+    });
+  }
   
   art={
     id:null,
     entrada:null,
     tipop:null,
     salidae:null,
-    descripcion:null
+    descripcion:null,
+    herramientas: null
   }
-  constructor(protected dashService: UsersService) { }
+
+
+  constructor(protected dashService: UsersService) {
+    this.contactForm = this.createForm();
+  }
   ngOnInit() {
     this.recuperarTodos();
   }
@@ -41,13 +58,17 @@ export class DatospComponent implements OnInit {
   }
 
   modificacion() {
-    console.log(this.art.descripcion);
-    this.dashService.modificacionPla(this.art).subscribe(datos => {
-      if (datos['resultado']=='OK') {
-        alert(datos['mensaje']);
-        this.recuperarTodos();
-      }
-    });    
+    if(this.contactForm.valid){
+      console.log(this.art.descripcion);
+      this.dashService.modificacionPla(this.art).subscribe(datos => {
+        if (datos['resultado']=='OK') {
+          alert(datos['mensaje']);
+          this.recuperarTodos();
+        }
+      });   
+    }else{
+      console.log("NON")
+    }
   }
   
   seleccionar(codigo) {
@@ -70,5 +91,11 @@ export class DatospComponent implements OnInit {
   hayRegistros() {
     return true;
   } 
+
+  get entrada(){ return this.contactForm.get('entradita');}
+  get salidae(){ return this.contactForm.get('salidae');}
+  get descripcion(){ return this.contactForm.get('descripcion');}
+  get herramientas(){ return this.contactForm.get('herramientas');}
+  get tipop(){ return this.contactForm.get('tipop');}
 
 }

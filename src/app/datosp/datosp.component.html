@@ -1,56 +1,173 @@
-<form class="my-form">
-  <div class="container">
-    <h1>Tabla de registro de casos de pruebas</h1>
-    <ul>
-      <li>
-        <div class="grid grid-3">
-          <input type="text" [(ngModel)]="art.entrada" name="entrada" placeholder="Entrada"/>
-        </div> 
-      </li>    
-      <li>
-        <div class="grid grid-3">
-          <input type="text" [(ngModel)]="art.tipop" name="tipop" placeholder="Tipo de Prueba"/>
-        </div>
-      </li>    
-      <li>
-        <div class="grid grid-3">
-          <input type="text" [(ngModel)]="art.salidae" name="salidae" placeholder="Salida esperadas" />
-        </div>
-      </li>    
-      <li>
-        <textarea [(ngModel)]="art.descripcion" name="descripcion" placeholder="Escribe aquí la descripcion..."></textarea>
-      </li>    
-      <li>
-        <div class="grid grid-3">
-          <button class="btn-grid">
-            <span (click)="modificacion()" class="front">Modificar</span>
-          </button>
-          <button (click)="generatePdf()" class="btn-grid">
-            <span class="front">Open PDF</span>
-          </button>
-        </div>
-      </li>
-    </ul>
-  </div>
-</form>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plantilla de pruebas</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<div>
-<h1> Tabla de registro de casos de pruebas</h1>
-        <table id="contentToConvert" border="1">
-            <tr>
-              <td>Id</td><td>Entradas</td><td>Tipo de prueba</td><td>Salidas esperadas</td><td>Descripcion</td>
-            </tr>
-            <tr *ngFor="let art of articulos">
-              <td>{{art.id}}</td>
-              <td>{{art.entrada}}</td>
-              <td>{{art.tipop}}</td> 
-              <td>{{art.salidae}}</td>   
-              <td>{{art.descripcion}}</td>  
-              <td><button (click)="baja(art.id)">Borrar?</button></td>
-              <td><button (click)="seleccionar(art.id)">Seleccionar</button></td>            
-            </tr>
-          </table>
-<br>
-      <a routerLink ="/PlantillaPruebas">Ir a Registro de pruebas</a>
-      
-</div>
+  <body>
+    <main class="contenedor seccion contenido-centrado">
+      <h2 class="fw-300 centrar-texto">Modifique los valores</h2>
+      <form class="contacto">
+       <fieldset>
+         <legend>INFORMACION A EDITAR</legend>
+         <div [formGroup]="contactForm">
+          <div class="Container-center">
+            <div class="Container-center">
+              <input
+                class=""
+                type="text"
+                [(ngModel)]="art.entrada"
+                name="entrada"
+                formControlName="entradita"
+                placeholder="Datos de entrada"
+              />
+            </div>
+            <div
+              class="alert-danger"
+              *ngIf="entrada.invalid && (entrada.dirty || entrada.touched)"
+            >
+              <div class="container-error-message" *ngIf="entrada.errors.required">
+                <h3>entrada es requerido</h3>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label for="tipo">tipo:</label>
+            <input
+              type="text"
+              class="css-input"
+              [(ngModel)]="art.tipop"
+              formControlName="tipop"
+              name="tipop"
+              placeholder="Tipo de prueba"
+            />
+          </div>
+          <div
+            class="alert-danger"
+            *ngIf="tipop.invalid && (tipop.dirty || tipop.touched)"
+          >
+            <div class="container-error-message" *ngIf="tipop.errors.required">
+              <h3>tipo es requerido</h3>
+            </div>
+          </div>
+          <label for="salida">salida:</label>
+          <div class="grid grid-3">
+            <input
+              type="text"
+              class="css-input"
+              [(ngModel)]="art.salidae"
+              formControlName="salidae"
+              name="salidae"
+              placeholder="Salida esperada"
+            />
+          </div>
+          <div
+            class="alert-danger"
+            *ngIf="salidae.invalid && (salidae.dirty || salidae.touched)"
+          >
+            <div class="container-error-message" *ngIf="salidae.errors.required">
+              <h3> salida es requerido</h3>
+            </div>
+          </div>
+          <label for="descripcion">descripcion:</label>
+          <div class="grid grid-3">
+            <textarea
+              [(ngModel)]="art.descripcion"
+              class="css-input"
+              name="descripcion"
+              formControlName="descripcion"
+              placeholder="Escribe aquí la descripcion..."
+            ></textarea>
+          </div>
+          <div
+            class="alert-danger"
+            *ngIf="
+                descripcion.invalid && (descripcion.dirty || descripcion.touched)
+              "
+          >
+            <div
+              class="container-error-message"
+              *ngIf="descripcion.errors.required"
+            >
+             <h3> descripcion es requerido</h3>
+            </div>
+          </div>
+          <label for="descripcion">herramientas a utilizar:</label>
+          <div class="grid grid-3">
+            <textarea
+              [(ngModel)]="art.herramientas"
+              class="css-input"
+              name="herramientas"
+              formControlName="herramientas"
+              placeholder="Escribe aquí la herramientas..."
+            ></textarea>
+          </div>
+          <div
+            class="alert-danger"
+            *ngIf="
+            herramientas.invalid && (herramientas.dirty || herramientas.touched)
+              "
+          >
+            <div
+              class="container-error-message"
+              *ngIf="herramientas.errors.required"
+            >
+             <h3> herramientas a utilizar es requerido</h3>
+            </div>
+          </div>
+        </div>
+       </fieldset> 
+       <button class="btn-grid" [disabled]="!contactForm.valid"class="boton boton-verde">
+       <a (click)="modificacion()" class="front">Modificar</a>
+       </button>
+       
+       <button class="btn-grid" class="boton boton-pdf">
+        <a (click)="generatePdf()" class="front">Open PDF</a>
+      </button>
+      </form>
+    </main>
+    <h1> Tabla de registro de casos de pruebas</h1>
+    <table id="contentToConvert" border="1" class="table-border">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Entradas</th>
+          <th>Tipo de prueba</th>
+          <th>Salidas esperadas</th>
+          <th>Descripcion</th>
+          <th>herramientas</th>
+          <th colspan="2">Botones</th>
+        </tr>
+      </thead>
+        <tr *ngFor="let art of articulos">
+          <td >{{art.id}}</td>
+          <td>{{art.entrada}}</td>
+          <td>{{art.tipop}}</td> 
+          <td>{{art.salidae}}</td>   
+          <td>{{art.descripcion}}</td> 
+          <td>{{art.herramientas}}</td> 
+          
+          <td><button class="btn-grid" class="boton boton-rojo" (click)="baja(art.id)">
+            <a>eliminar</a>
+          </button></td>
+          <td><button class="btn-grid" class="boton boton-azul" (click)="seleccionar(art.id)">
+            <a>seleccionar</a>
+          </button></td>            
+        </tr>
+      </table>
+
+      <footer class="site-footer seccion">
+        <div class="contenedor contenedor-footer">
+          <nav class="navegacion">
+            <a routerLink ="/PlantillaPruebas">Ir a Registro de pruebas</a>
+          </nav>
+          <p class="copy">Todos los derechos reservados &copy;</p>
+      </div>
+      </footer>
+  </body>
+</html>

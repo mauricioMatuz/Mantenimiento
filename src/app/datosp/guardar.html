@@ -1,0 +1,75 @@
+<form class="">
+    <div class="container">
+      <h1>Tabla de registro de casos de pruebas</h1>
+      <ul>
+        <li>
+          <div class="grid grid-3">
+            <input type="text" [(ngModel)]="art.entrada" name="entrada" placeholder="Entrada" class="css-input"/>
+            <br>
+            <br>
+          </div> 
+        </li>    
+        <li>
+          <div class="grid grid-3">
+            <input type="text" [(ngModel)]="art.tipop" name="tipop" placeholder="Tipo de Prueba" class="css-input"/>
+            <br>
+            <br>
+          </div>
+        </li>    
+        <li>
+          <div class="grid grid-3">
+            <input type="text" [(ngModel)]="art.salidae" name="salidae" placeholder="Salida esperadas" class="css-input" />
+            <br>
+            <br>
+            <br>
+          </div>
+        </li>    
+        <li>
+          <textarea [(ngModel)]="art.descripcion" name="descripcion" placeholder="Escribe aquí la descripcion..." class="css-input"></textarea>
+          <br>
+          <br>
+        </li>    
+        <li>
+          <textarea [(ngModel)]="art.descripcion" name="herramientas" placeholder="Escribe aquí las herramientas a usar..." class="css-input"></textarea>
+        </li>
+        <li>
+          <div class="grid grid-3">
+            <button class="myButtonOk" style="margin: 15px;" >
+              <span (click)="modificacion()" class="front">Modificar</span>
+            </button>
+            <button (click)="generatePdf()" class="myButtonOpen">
+              <span class="front">Open PDF</span>
+            </button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </form>
+  
+  <div>
+  <h1> Tabla de registro de casos de pruebas</h1>
+          <table id="contentToConvert" border="1" class="table-border">
+              <tr>
+                <th>Id</th>
+                <th>Entradas</th>
+                <th>Tipo de prueba</th>
+                <th>Salidas esperadas</th>
+                <th>Descripcion</th>
+                <th>herramientas</th>
+                <th colspan="2">Botones</th>
+              </tr>
+              <tr *ngFor="let art of articulos">
+                <td >{{art.id}}</td>
+                <td>{{art.entrada}}</td>
+                <td>{{art.tipop}}</td> 
+                <td>{{art.salidae}}</td>   
+                <td>{{art.descripcion}}</td> 
+                <td>{{art.herramientas}}</td> 
+                <td><button (click)="baja(art.id)">Borrar?</button></td>
+                <td><button (click)="seleccionar(art.id)">Seleccionar</button></td>            
+              </tr>
+            </table>
+  <br>
+        <a routerLink ="/PlantillaPruebas">Ir a Registro de pruebas</a>
+        
+  </div>

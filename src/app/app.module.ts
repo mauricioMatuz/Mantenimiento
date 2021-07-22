@@ -27,6 +27,7 @@ import { DatosProcesoComponent } from './datos-proceso/datos-proceso.component';
     InicioComponent,
     PoliticasComponent,
     DatosProcesoComponent,
+    
   ],
   imports: [
     BrowserModule, AppRoutingModule, FormsModule, HttpClientModule, ReactiveFormsModule
